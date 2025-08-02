@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ร้านขายหุ่นยนต์</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Header -->
+  <header class="bg-green-600 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-xl font-bold">บริษัทของเรา</div>
+      <nav>
+        <ul class="flex space-x-6 text-sm font-medium">
+          <li><a href="#" class="hover:underline">หน้าแรก</a></li>
+          <li><a href="#" class="hover:underline">สินค้า</a></li>
+          <li><a href="#" class="hover:underline">เกี่ยวกับเรา</a></li>
+          <li><a href="#" class="hover:underline">บริการ</a></li>
+          <li><a href="#" class="hover:underline">ติดต่อ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-7xl mx-auto px-4 py-8 flex">
+    
+    <!-- Sidebar -->
+    <aside class="w-1/5 bg-white shadow-md rounded-lg p-4 mr-4">
+      <h3 class="text-lg font-bold mb-4">หมวดหมู่</h3>
+      <ul class="space-y-2 text-sm text-gray-700">
+        <li><a href="#" class="hover:text-green-600">หุ่นยนต์ภายในบ้าน</a></li>
+        <li><a href="#" class="hover:text-green-600">หุ่นยนต์อุตสาหกรรม</a></li>
+        <li><a href="#" class="hover:text-green-600">หุ่นยนต์การแพทย์</a></li>
+        <li><a href="#" class="hover:text-green-600">หุ่นยนต์เพื่อการศึกษา</a></li>
+        <li><a href="#" class="hover:text-green-600">อุปกรณ์เสริม</a></li>
+      </ul>
+    </aside>
+
+    <!-- Product Cards -->
+    <section class="w-4/5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <img src="https://via.placeholder.com/400x200" alt="RoboBuddy" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <h4 class="text-xl font-semibold">โรโบบัดดี้ 1000</h4>
+          <p class="text-sm text-gray-600 mt-2">หุ่นยนต์อเนกประสงค์พร้อม AI สำหรับใช้งานทั่วไปในบ้าน</p>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="text-green-600 font-bold text-lg">฿1,500</span>
+            <button class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">ดูรายละเอียด</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <img src="https://via.placeholder.com/400x200" alt="Industrial Arm X" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <h4 class="text-xl font-semibold">แขนกลอินดัสเทรียล X</h4>
+          <p class="text-sm text-gray-600 mt-2">แขนกลความแม่นยำสูงสำหรับการผลิตและประกอบ</p>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="text-green-600 font-bold text-lg">฿15,000</span>
+            <button class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">ดูรายละเอียด</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <img src="https://via.placeholder.com/400x200" alt="MediBot 500" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <h4 class="text-xl font-semibold">เมดิบอท 500</h4>
+          <p class="text-sm text-gray-600 mt-2">ช่วยวินิจฉัยและดูแลผู้ป่วย เหมาะสำหรับการใช้งานทางคลินิก</p>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="text-green-600 font-bold text-lg">฿8,000</span>
+            <button class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">ดูรายละเอียด</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <img src="https://via.placeholder.com/400x200" alt="EduBot Pro" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <h4 class="text-xl font-semibold">เอดูบอท โปร</h4>
+          <p class="text-sm text-gray-600 mt-2">หุ่นยนต์เพื่อการศึกษาแบบ STEM เหมาะสำหรับทุกวัย</p>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="text-green-600 font-bold text-lg">฿750</span>
+            <button class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">ดูรายละเอียด</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-100 mt-12 py-4">
+    <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-600">
+      <p>&copy; 2025 บริษัทของคุณ สงวนลิขสิทธิ์</p>
+      <p>
+        <a href="#" class="text-blue-600 hover:underline">เงื่อนไขการใช้บริการ</a> |
+        <a href="#" class="text-blue-600 hover:underline">นโยบายความเป็นส่วนตัว</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
