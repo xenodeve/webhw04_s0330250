@@ -26,12 +26,10 @@
             font-family: 'IBM Plex Sans Thai', 'Poppins', sans-serif;
             font-weight: bold;
             text-transform: uppercase;
-            position: absolute;
-            /* animation fix*/
+            position: absolute; /* animation fix*/
             margin-left: 13px;
             font-size: 2.2em;
-            text-decoration: none;
-            /*ลบเส้นใต้จากค่า default ของ Browser */
+            text-decoration: none; /*ลบเส้นใต้จากค่า default ของ Browser */
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
             left: 0;
             top: 0;
@@ -88,35 +86,104 @@
             }
         }
 
-        /* Dark mode toggle button styles */
-        .dark-mode-toggle {
-            width: 50px;
-            height: 24px;
-            background: #374151;
-            border-radius: 12px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .dark-mode-toggle.active {
-            background: #A58D5D;
-        }
-
-        .dark-mode-toggle::before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: white;
+        /* Dark mode toggle button styles inspired by web.dev */
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 8px;
             border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.3s ease;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .dark-mode-toggle.active::before {
-            transform: translateX(26px);
+        .theme-toggle:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sun-and-moon > :is(.moon, .sun, .sun-beams) {
+            transform-origin: center;
+        }
+
+        .sun-and-moon > :is(.moon, .sun) {
+            fill: currentColor;
+        }
+
+        .theme-toggle:is(:hover, :focus-visible) > .sun-and-moon > :is(.moon, .sun) {
+            fill: #C9AB74;
+        }
+
+        .sun-and-moon > .sun-beams {
+            stroke: currentColor;
+            stroke-width: 2px;
+        }
+
+        .theme-toggle:is(:hover, :focus-visible) .sun-and-moon > .sun-beams {
+            stroke: #C9AB74;
+        }
+
+        /* Dark mode styles */
+        [data-theme="dark"] .sun-and-moon > .sun {
+            transform: scale(1.75);
+        }
+
+        [data-theme="dark"] .sun-and-moon > .sun-beams {
+            opacity: 0;
+        }
+
+        [data-theme="dark"] .sun-and-moon > .moon > circle {
+            transform: translateX(-7px);
+        }
+
+        @supports (cx: 1) {
+            [data-theme="dark"] .sun-and-moon > .moon > circle {
+                cx: 17;
+                transform: translateX(0);
+            }
+        }
+
+        /* Animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .sun-and-moon > .sun {
+                transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            .sun-and-moon > .sun-beams {
+                transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                           opacity 0.5s ease;
+            }
+
+            .sun-and-moon .moon > circle {
+                transition: transform 0.25s ease-out;
+            }
+
+            @supports (cx: 1) {
+                .sun-and-moon .moon > circle {
+                    transition: cx 0.25s ease-out;
+                }
+            }
+
+            [data-theme="dark"] .sun-and-moon > .sun {
+                transition-timing-function: ease;
+                transition-duration: 0.25s;
+                transform: scale(1.75);
+            }
+
+            [data-theme="dark"] .sun-and-moon > .sun-beams {
+                transition-duration: 0.15s;
+                transform: rotateZ(-25deg);
+            }
+
+            [data-theme="dark"] .sun-and-moon > .moon > circle {
+                transition-duration: 0.5s;
+                transition-delay: 0.25s;
+            }
         }
     </style>
     <script>
@@ -137,7 +204,7 @@
                         border: '#B8A99A',    // สีน้ำตาลอ่อนสำหรับขอบ
                         // Dark mode colors
                         darkPrimary: '#1a1a1a',
-                        darkSecondary: '#2d2d2d',
+                        darkSecondary: '#2d2d2d', 
                         darkTertiary: '#404040',
                         darkAccent: '#C9AB74',
                         darkCard: '#333333',
@@ -197,11 +264,25 @@
                     </ul>
                 </nav>
                 <!-- Dark Mode Toggle Button -->
-                <div class="flex items-center space-x-2">
-                    <span class="text-sm text-white/70">🌙</span>
-                    <div class="dark-mode-toggle" id="darkModeToggle"></div>
-                    <span class="text-sm text-white/70">☀️</span>
-                </div>
+                <button class="theme-toggle" id="theme-toggle" title="เปลี่ยนโหมดสว่าง/มืด" aria-label="light" aria-live="polite">
+                    <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+                        <mask class="moon" id="moon-mask">
+                            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                            <circle cx="24" cy="10" r="6" fill="black" />
+                        </mask>
+                        <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+                        <g class="sun-beams" stroke="currentColor">
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </g>
+                    </svg>
+                </button>
             </div>
         </div>
     </header>
@@ -253,14 +334,12 @@
                     alt="RoboBuddy"
                     class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
                 <div class="p-5">
-                    <h4
-                        class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    <h4 class="text-2xl font-semibold text-accent dark:text-darkAccent relative
                     after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
                     after:transition-all after:duration-500 after:ease-in-out
                     group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
                         RoboBuddy 1000</h4>
-                    <p class="text-base text-black/70 dark:text-white/70 mt-2">หุ่นยนต์อเนกประสงค์พร้อม AI
-                        สำหรับใช้งานทั่วไปในบ้าน</p>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">หุ่นยนต์อเนกประสงค์พร้อม AI สำหรับใช้งานทั่วไปในบ้าน</p>
                     <div class="mt-6 flex justify-between items-center">
                         <span class="text-accent dark:text-darkAccent font-bold text-xl">฿1,500</span>
                         <button
@@ -278,14 +357,12 @@
                     alt="Industrial Arm X"
                     class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
                 <div class="p-5">
-                    <h4
-                        class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    <h4 class="text-2xl font-semibold text-accent dark:text-darkAccent relative
                     after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
                     after:transition-all after:duration-500 after:ease-in-out
                     group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
                         Industrial Arm X</h4>
-                    <p class="text-base text-black/70 dark:text-white/70 mt-2">แขนกลความแม่นยำสูงสำหรับการผลิตและประกอบ
-                    </p>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">แขนกลความแม่นยำสูงสำหรับการผลิตและประกอบ</p>
                     <div class="mt-6 flex justify-between items-center">
                         <span class="text-accent dark:text-darkAccent font-bold text-xl">฿15,000</span>
                         <button
@@ -303,14 +380,12 @@
                     alt="MediBot 500"
                     class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
                 <div class="p-5">
-                    <h4
-                        class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    <h4 class="text-2xl font-semibold text-accent dark:text-darkAccent relative
                     after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
                     after:transition-all after:duration-500 after:ease-in-out
                     group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
                         MedicBot 500</h4>
-                    <p class="text-base text-black/70 dark:text-white/70 mt-2">ช่วยวินิจฉัยและดูแลผู้ป่วย
-                        เหมาะสำหรับการใช้งานทางคลินิก</p>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">ช่วยวินิจฉัยและดูแลผู้ป่วย เหมาะสำหรับการใช้งานทางคลินิก</p>
                     <div class="mt-6 flex justify-between items-center">
                         <span class="text-accent dark:text-darkAccent font-bold text-xl">฿8,000</span>
                         <button
@@ -328,15 +403,13 @@
                     alt="EduBot Pro"
                     class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl ">
                 <div class="p-5">
-                    <h4
-                        class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    <h4 class="text-2xl font-semibold text-accent dark:text-darkAccent relative
                     after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
                     after:transition-all after:duration-500 after:ease-in-out
                     group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
                         EduBot Pro
                     </h4>
-                    <p class="text-base text-black/70 dark:text-white/70 mt-2">หุ่นยนต์เพื่อการศึกษาแบบ STEM
-                        เหมาะสำหรับทุกวัย</p>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">หุ่นยนต์เพื่อการศึกษาแบบ STEM เหมาะสำหรับทุกวัย</p>
                     <div class="mt-6 flex justify-between items-center">
                         <span class="text-accent dark:text-darkAccent font-bold text-xl">฿750</span>
                         <button
@@ -354,36 +427,71 @@
         <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400 dark:text-gray-300">
             <!-- Copyright Message -->
             <p>
-            <p class="text-white/70 dark:text-white/80">&copy; 2025 บริษัทซีโนจำกัดขอสงวนลิขสิทธิ์</p>
-            <a href="#"
-                class="text-white/80 dark:text-white/90 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">เงื่อนไขการใช้บริการ</a>
-            <span class="mx-2">|</span>
-            <a href="#"
-                class="text-white/80 dark:text-white/90 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">นโยบายความเป็นส่วนตัว</a>
+                <p class="text-white/70 dark:text-white/80">&copy; 2025 บริษัทซีโนจำกัดขอสงวนลิขสิทธิ์</p>
+                <a href="#"
+                    class="text-white/80 dark:text-white/90 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">เงื่อนไขการใช้บริการ</a>
+                <span class="mx-2">|</span>
+                <a href="#"
+                    class="text-white/80 dark:text-white/90 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">นโยบายความเป็นส่วนตัว</a>
             </p>
         </div>
     </footer>
 
     <script>
-        // Dark mode toggle functionality
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const html = document.documentElement;
-
-        // Check for saved theme preference or default to 'light'
-        const currentTheme = localStorage.getItem('theme') || 'light';
-
-        if (currentTheme === 'dark') {
-            html.classList.add('dark');
-            darkModeToggle.classList.add('active');
-        }
-
-        darkModeToggle.addEventListener('click', function () {
-            html.classList.toggle('dark');
-            darkModeToggle.classList.toggle('active');
-
-            // Save theme preference
-            const theme = html.classList.contains('dark') ? 'dark' : 'light';
-            localStorage.setItem('theme', theme);
+        // Dark mode toggle functionality inspired by web.dev
+        const storageKey = 'theme-preference';
+        
+        const getColorPreference = () => {
+            if (localStorage.getItem(storageKey))
+                return localStorage.getItem(storageKey);
+            else
+                return window.matchMedia('(prefers-color-scheme: dark)').matches
+                    ? 'dark'
+                    : 'light';
+        };
+        
+        const setPreference = () => {
+            localStorage.setItem(storageKey, theme.value);
+            reflectPreference();
+        };
+        
+        const reflectPreference = () => {
+            document.firstElementChild.setAttribute('data-theme', theme.value);
+            document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
+            
+            // Apply Tailwind dark mode class
+            if (theme.value === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        };
+        
+        const theme = {
+            value: getColorPreference(),
+        };
+        
+        const onClick = () => {
+            // flip current value
+            theme.value = theme.value === 'light' ? 'dark' : 'light';
+            setPreference();
+        };
+        
+        // set early so no page flashes / CSS is made aware
+        reflectPreference();
+        
+        window.onload = () => {
+            // set on load so screen readers can see latest value on the button
+            reflectPreference();
+            
+            // now this script can find and listen for clicks on the control
+            document.querySelector('#theme-toggle').addEventListener('click', onClick);
+        };
+        
+        // sync with system changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({matches: isDark}) => {
+            theme.value = isDark ? 'dark' : 'light';
+            setPreference();
         });
     </script>
 
