@@ -219,52 +219,31 @@
 
 <body class="bg-primary dark:bg-darkPrimary font-sans antialiased transition-all duration-300">
 
-    <!-- 1) Header Part -->
+    <!-- Header -->
     <header class="bg-secondary dark:bg-darkSecondary text-white/85 shadow-md transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
             <!-- Company Logo -->
-            <div class="logo-container relative h-12">
+            <div class="logo-container relative h-12 mb-2 md:mb-0">
                 <a href="#" class="company-logo">Xeno</a>
                 <a href="#" class="company-logo">Xeno</a>
             </div>
-            <!-- 5 Options Menu + Dark Mode Toggle (Right Part) -->
-            <div class="flex items-center space-x-6">
+            <!-- Hamburger for mobile -->
+            <button id="menu-toggle" class="md:hidden ml-auto text-2xl px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-accent">
+                ☰
+            </button>
+            <!-- Menu -->
+            <div id="main-menu" class="w-full md:w-auto md:flex items-center space-x-6 mt-2 md:mt-0 hidden md:block">
                 <nav>
-                    <ul class="flex space-x-7 text-base font-medium">
-                        <li>
-                            <a href="#"
-                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
-                                หน้าแรก
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
-                                สินค้า
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
-                                เกี่ยวกับเรา
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
-                                บริการ
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
-                                ติดต่อ
-                            </a>
-                        </li>
+                    <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-7 text-base font-medium">
+                        <li><a href="#" class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">หน้าแรก</a></li>
+                        <li><a href="#" class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">สินค้า</a></li>
+                        <li><a href="#" class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">เกี่ยวกับเรา</a></li>
+                        <li><a href="#" class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">บริการ</a></li>
+                        <li><a href="#" class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">ติดต่อ</a></li>
                     </ul>
                 </nav>
                 <!-- Dark Mode Toggle Button -->
-                <button class="theme-toggle" id="theme-toggle" title="เปลี่ยนโหมดสว่าง/มืด" aria-label="light" aria-live="polite">
+                <button class="theme-toggle ml-2" id="theme-toggle" title="เปลี่ยนโหมดสว่าง/มืด" aria-label="light" aria-live="polite">
                     <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
                         <mask class="moon" id="moon-mask">
                             <rect x="0" y="0" width="100%" height="100%" fill="white" />
@@ -287,14 +266,11 @@
         </div>
     </header>
 
-    <!-- 2) Main Content Part -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex">
-
-        <!-- Aside Part (with 5 Options Menu) -->
-        <aside
-            class="group w-1/5 bg-card dark:bg-darkCard shadow-lg rounded-xl p-4 mr-4 border border-border dark:border-darkBorder hover:shadow-black/30 dark:hover:shadow-white/10 transition duration-300 ease-in-out">
-            <h3
-                class="text-lg font-bold mb-4 text-accent dark:text-darkAccent border-l-4 border-accent dark:border-darkAccent pl-3 group-hover:border-tertiary dark:group-hover:border-darkAccent group-hover:text-tertiary dark:group-hover:text-darkAccent transition-all duration-300">
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-2 sm:px-4 py-8 flex flex-col lg:flex-row gap-6">
+        <!-- Aside (หมวดหมู่) -->
+        <aside class="group w-full lg:w-1/5 bg-card dark:bg-darkCard shadow-lg rounded-xl p-4 border border-border dark:border-darkBorder hover:shadow-black/30 dark:hover:shadow-white/10 transition duration-300 ease-in-out mb-6 lg:mb-0">
+            <h3 class="text-lg font-bold mb-4 text-accent dark:text-darkAccent border-l-4 border-accent dark:border-darkAccent pl-3 group-hover:border-tertiary dark:group-hover:border-darkAccent group-hover:text-tertiary dark:group-hover:text-darkAccent transition-all duration-300">
                 หมวดหมู่</h3>
             <ul class="space-y-2 text-base text-black/80 dark:text-white/80">
                 <li><a href="#"
@@ -324,9 +300,8 @@
                 </li>
             </ul>
         </aside>
-
-        <!-- Main Content Area (with 4 Cards with Robot Details) -->
-        <section class="w-4/5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <!-- Cards -->
+        <section class="w-full lg:w-4/5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-6">
             <!-- Robot Card 1 -->
             <div
                 class="group bg-cardLight dark:bg-darkCardLight rounded-xl shadow-lg overflow-hidden border border-border dark:border-darkBorder hover:shadow-black/20 dark:hover:shadow-white/10 hover:scale-105 transition duration-300 ease-in-out">
@@ -422,9 +397,9 @@
         </section>
     </main>
 
-    <!-- 3) Footer Part -->
+    <!-- Footer -->
     <footer class="bg-secondary dark:bg-darkSecondary mt-12 py-4 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400 dark:text-gray-300">
+        <div class="max-w-7xl mx-auto px-2 sm:px-4 text-center text-sm text-gray-400 dark:text-gray-300">
             <!-- Copyright Message -->
             <p>
                 <p class="text-white/70 dark:text-white/80">&copy; 2025 บริษัทซีโนจำกัดขอสงวนลิขสิทธิ์</p>
@@ -438,6 +413,11 @@
     </footer>
 
     <script>
+        // Hamburger menu toggle
+        document.getElementById('menu-toggle').onclick = function() {
+            const menu = document.getElementById('main-menu');
+            menu.classList.toggle('hidden');
+        };
         // Dark mode toggle functionality inspired by web.dev
         const storageKey = 'theme-preference';
         
@@ -445,7 +425,7 @@
             if (localStorage.getItem(storageKey))
                 return localStorage.getItem(storageKey);
             else
-                return window.matchMedia('(prefers-color-scheme: dark)').matches
+                return window.matchMedia('(prefers-color-scheme: dark)').matches 
                     ? 'dark'
                     : 'light';
         };
@@ -488,7 +468,7 @@
             document.querySelector('#theme-toggle').addEventListener('click', onClick);
         };
         
-        // sync with system changes
+        // sync theme กับ system
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({matches: isDark}) => {
             theme.value = isDark ? 'dark' : 'light';
             setPreference();
