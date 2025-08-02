@@ -19,6 +19,7 @@
         body {
             font-family: 'IBM Plex Sans Thai', sans-serif;
             scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .company-logo {
@@ -86,9 +87,41 @@
                         0% 100%);
             }
         }
+
+        /* Dark mode toggle button styles */
+        .dark-mode-toggle {
+            width: 50px;
+            height: 24px;
+            background: #374151;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dark-mode-toggle.active {
+            background: #A58D5D;
+        }
+
+        .dark-mode-toggle::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .dark-mode-toggle.active::before {
+            transform: translateX(26px);
+        }
     </style>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -102,6 +135,14 @@
                         card: '#E8E3DC',      // สีพื้นการ์ด
                         cardLight: '#F3EEE8', // สีพื้นการ์ดรอง
                         border: '#B8A99A',    // สีน้ำตาลอ่อนสำหรับขอบ
+                        // Dark mode colors
+                        darkPrimary: '#1a1a1a',
+                        darkSecondary: '#2d2d2d',
+                        darkTertiary: '#404040',
+                        darkAccent: '#C9AB74',
+                        darkCard: '#333333',
+                        darkCardLight: '#404040',
+                        darkBorder: '#555555',
                     }
                 }
             }
@@ -109,51 +150,59 @@
     </script>
 </head>
 
-<body class="bg-primary font-sans antialiased">
+<body class="bg-primary dark:bg-darkPrimary font-sans antialiased transition-all duration-300">
 
     <!-- 1) Header Part -->
-    <header class="bg-secondary text-white/85 shadow-md">
+    <header class="bg-secondary dark:bg-darkSecondary text-white/85 shadow-md transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <!-- Company Logo -->
             <div class="logo-container relative h-12">
                 <a href="#" class="company-logo">Xeno</a>
                 <a href="#" class="company-logo">Xeno</a>
             </div>
-            <!-- 5 Options Menu (Right Part) -->
-            <nav>
-                <ul class="flex space-x-7 text-base font-medium">
-                    <li>
-                        <a href="#"
-                            class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
-                            หน้าแรก
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
-                            สินค้า
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
-                            เกี่ยวกับเรา
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
-                            บริการ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
-                            ติดต่อ
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <!-- 5 Options Menu + Dark Mode Toggle (Right Part) -->
+            <div class="flex items-center space-x-6">
+                <nav>
+                    <ul class="flex space-x-7 text-base font-medium">
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                หน้าแรก
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                สินค้า
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                เกี่ยวกับเรา
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                บริการ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                ติดต่อ
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- Dark Mode Toggle Button -->
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-white/70">🌙</span>
+                    <div class="dark-mode-toggle" id="darkModeToggle"></div>
+                    <span class="text-sm text-white/70">☀️</span>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -162,33 +211,33 @@
 
         <!-- Aside Part (with 5 Options Menu) -->
         <aside
-            class="group w-1/5 bg-card shadow-lg rounded-xl p-4 mr-4 border border-border hover:shadow-black/30 transition duration-300 ease-in-out">
+            class="group w-1/5 bg-card dark:bg-darkCard shadow-lg rounded-xl p-4 mr-4 border border-border dark:border-darkBorder hover:shadow-black/30 dark:hover:shadow-white/10 transition duration-300 ease-in-out">
             <h3
-                class="text-lg font-bold mb-4 text-accent border-l-4 border-accent pl-3 group-hover:border-tertiary group-hover:text-tertiary transition-all duration-300">
+                class="text-lg font-bold mb-4 text-accent dark:text-darkAccent border-l-4 border-accent dark:border-darkAccent pl-3 group-hover:border-tertiary dark:group-hover:border-darkAccent group-hover:text-tertiary dark:group-hover:text-darkAccent transition-all duration-300">
                 หมวดหมู่</h3>
-            <ul class="space-y-2 text-base text-black/80">
+            <ul class="space-y-2 text-base text-black/80 dark:text-white/80">
                 <li><a href="#"
-                        class="hover:text-secondary transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
                         - หุ่นยนต์ภายในบ้าน
                     </a>
                 </li>
                 <li><a href="#"
-                        class="hover:text-secondary transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
                         - หุ่นยนต์อุตสาหกรรม
                     </a>
                 </li>
                 <li><a href="#"
-                        class="hover:text-secondary transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
                         - หุ่นยนต์การแพทย์
                     </a>
                 </li>
                 <li><a href="#"
-                        class="hover:text-secondary transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
                         - หุ่นยนต์เพื่อการศึกษา
                     </a>
                 </li>
                 <li><a href="#"
-                        class="hover:text-secondary transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
                         - อุปกรณ์เสริม
                     </a>
                 </li>
@@ -199,21 +248,23 @@
         <section class="w-4/5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <!-- Robot Card 1 -->
             <div
-                class="group bg-cardLight rounded-xl shadow-lg overflow-hidden border border-border hover:shadow-black/20 hover:scale-105 transition duration-300 ease-in-out">
+                class="group bg-cardLight dark:bg-darkCardLight rounded-xl shadow-lg overflow-hidden border border-border dark:border-darkBorder hover:shadow-black/20 dark:hover:shadow-white/10 hover:scale-105 transition duration-300 ease-in-out">
                 <img src="https://media.discordapp.net/attachments/1401190559305170985/1401190567576338472/1.png?ex=688f5fe8&is=688e0e68&hm=0316c82116ebb40880d6b029e69949c806e35c0ca17214856be99efa0813a6b1&=&format=webp&quality=lossless&width=1061&height=597"
                     alt="RoboBuddy"
-                    class="w-full h-48 object-contain object-top bg-cardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
+                    class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
                 <div class="p-5">
-                    <h4 class="text-2xl font-semibold text-accent relative
-                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary after:opacity-0
+                    <h4
+                        class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
                     after:transition-all after:duration-500 after:ease-in-out
-                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary">
+                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
                         RoboBuddy 1000</h4>
-                    <p class="text-base text-black/70 mt-2">หุ่นยนต์อเนกประสงค์พร้อม AI สำหรับใช้งานทั่วไปในบ้าน</p>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">หุ่นยนต์อเนกประสงค์พร้อม AI
+                        สำหรับใช้งานทั่วไปในบ้าน</p>
                     <div class="mt-6 flex justify-between items-center">
-                        <span class="text-accent font-bold text-xl">฿1,500</span>
+                        <span class="text-accent dark:text-darkAccent font-bold text-xl">฿1,500</span>
                         <button
-                            class="bg-accent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 transition-all duration-300">
+                            class="bg-accent dark:bg-darkAccent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-all duration-300">
                             รายละเอียด
                         </button>
                     </div>
@@ -222,21 +273,23 @@
 
             <!-- Robot Card 2 -->
             <div
-                class="group bg-cardLight rounded-xl shadow-lg overflow-hidden border border-border hover:shadow-black/20 hover:scale-105 transition duration-300 ease-in-out">
+                class="group bg-cardLight dark:bg-darkCardLight rounded-xl shadow-lg overflow-hidden border border-border dark:border-darkBorder hover:shadow-black/20 dark:hover:shadow-white/10 hover:scale-105 transition duration-300 ease-in-out">
                 <img src="https://media.discordapp.net/attachments/1401190559305170985/1401190568436043817/2.png?ex=688f5fe8&is=688e0e68&hm=02c37efb61a2fc1d86b121ccd441d5f318d97d7fe121b337cfd9cf0ddb027f85&=&format=webp&quality=lossless"
                     alt="Industrial Arm X"
-                    class="w-full h-48 object-contain object-top bg-cardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
+                    class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
                 <div class="p-5">
-                    <h4 class="text-2xl font-semibold text-accent relative
-                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary after:opacity-0
+                    <h4
+                        class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
                     after:transition-all after:duration-500 after:ease-in-out
-                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary">
+                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
                         Industrial Arm X</h4>
-                    <p class="text-base text-black/70 mt-2">แขนกลความแม่นยำสูงสำหรับการผลิตและประกอบ</p>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">แขนกลความแม่นยำสูงสำหรับการผลิตและประกอบ
+                    </p>
                     <div class="mt-6 flex justify-between items-center">
-                        <span class="text-accent font-bold text-xl">฿15,000</span>
+                        <span class="text-accent dark:text-darkAccent font-bold text-xl">฿15,000</span>
                         <button
-                            class="bg-accent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 transition-all duration-300">
+                            class="bg-accent dark:bg-darkAccent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-all duration-300">
                             รายละเอียด
                         </button>
                     </div>
@@ -245,21 +298,23 @@
 
             <!-- Robot Card 3 -->
             <div
-                class="group bg-cardLight rounded-xl shadow-lg overflow-hidden border border-border hover:shadow-black/20 hover:scale-105 transition duration-300 ease-in-out">
+                class="group bg-cardLight dark:bg-darkCardLight rounded-xl shadow-lg overflow-hidden border border-border dark:border-darkBorder hover:shadow-black/20 dark:hover:shadow-white/10 hover:scale-105 transition duration-300 ease-in-out">
                 <img src="https://media.discordapp.net/attachments/1401190559305170985/1401190568108752956/3_fix.png?ex=688f5fe8&is=688e0e68&hm=3bf66e4a1208bcad26b5b1868cf5d3efdc3fe71557064f8fa56da41ab13ccbaa&=&format=webp&quality=lossless&width=597&height=597"
                     alt="MediBot 500"
-                    class="w-full h-48 object-contain object-top bg-cardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
+                    class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
                 <div class="p-5">
-                    <h4 class="text-2xl font-semibold text-accent relative
-                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary after:opacity-0
+                    <h4
+                        class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
                     after:transition-all after:duration-500 after:ease-in-out
-                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary">
+                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
                         MedicBot 500</h4>
-                    <p class="text-base text-black/70 mt-2">ช่วยวินิจฉัยและดูแลผู้ป่วย เหมาะสำหรับการใช้งานทางคลินิก</p>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">ช่วยวินิจฉัยและดูแลผู้ป่วย
+                        เหมาะสำหรับการใช้งานทางคลินิก</p>
                     <div class="mt-6 flex justify-between items-center">
-                        <span class="text-accent font-bold text-xl">฿8,000</span>
+                        <span class="text-accent dark:text-darkAccent font-bold text-xl">฿8,000</span>
                         <button
-                            class="bg-accent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 transition-all duration-300">
+                            class="bg-accent dark:bg-darkAccent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-all duration-300">
                             รายละเอียด
                         </button>
                     </div>
@@ -268,22 +323,24 @@
 
             <!-- Robot Card 4 -->
             <div
-                class="group bg-cardLight rounded-xl shadow-lg overflow-hidden border border-border hover:shadow-black/20 hover:scale-105 transition duration-300 ease-in-out">
+                class="group bg-cardLight dark:bg-darkCardLight rounded-xl shadow-lg overflow-hidden border border-border dark:border-darkBorder hover:shadow-black/20 dark:hover:shadow-white/10 hover:scale-105 transition duration-300 ease-in-out">
                 <img src="https://media.discordapp.net/attachments/1401190559305170985/1401190569513975858/4.webp?ex=688f5fe8&is=688e0e68&hm=8046ec01c82df282f6f8deda01ee0e7d137e236b739a2d86be9190f1565aeb6f&=&format=webp&width=597&height=597"
                     alt="EduBot Pro"
-                    class="w-full h-48 object-contain object-top bg-cardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl ">
+                    class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl ">
                 <div class="p-5">
-                    <h4 class="text-2xl font-semibold text-accent relative
-                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary after:opacity-0
+                    <h4
+                        class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
                     after:transition-all after:duration-500 after:ease-in-out
-                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary">
+                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
                         EduBot Pro
                     </h4>
-                    <p class="text-base text-black/70 mt-2">หุ่นยนต์เพื่อการศึกษาแบบ STEM เหมาะสำหรับทุกวัย</p>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">หุ่นยนต์เพื่อการศึกษาแบบ STEM
+                        เหมาะสำหรับทุกวัย</p>
                     <div class="mt-6 flex justify-between items-center">
-                        <span class="text-accent font-bold text-xl">฿750</span>
+                        <span class="text-accent dark:text-darkAccent font-bold text-xl">฿750</span>
                         <button
-                            class="bg-accent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 transition-all duration-300">
+                            class="bg-accent dark:bg-darkAccent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-all duration-300">
                             รายละเอียด
                         </button>
                     </div>
@@ -293,19 +350,42 @@
     </main>
 
     <!-- 3) Footer Part -->
-    <footer class="bg-secondary mt-12 py-4">
-        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400">
+    <footer class="bg-secondary dark:bg-darkSecondary mt-12 py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400 dark:text-gray-300">
             <!-- Copyright Message -->
             <p>
-                <p class="text-white/70">&copy; 2025 บริษัทซีโนจำกัดขอสงวนลิขสิทธิ์</p>
-                <a href="#"
-                    class="text-white/80 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">เงื่อนไขการใช้บริการ</a>
-                <span class="mx-2">|</span>
-                <a href="#"
-                    class="text-white/80 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 hover:after:w-full">นโยบายความเป็นส่วนตัว</a>
+            <p class="text-white/70 dark:text-white/80">&copy; 2025 บริษัทซีโนจำกัดขอสงวนลิขสิทธิ์</p>
+            <a href="#"
+                class="text-white/80 dark:text-white/90 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">เงื่อนไขการใช้บริการ</a>
+            <span class="mx-2">|</span>
+            <a href="#"
+                class="text-white/80 dark:text-white/90 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">นโยบายความเป็นส่วนตัว</a>
             </p>
         </div>
     </footer>
+
+    <script>
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to 'light'
+        const currentTheme = localStorage.getItem('theme') || 'light';
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+            darkModeToggle.classList.add('active');
+        }
+
+        darkModeToggle.addEventListener('click', function () {
+            html.classList.toggle('dark');
+            darkModeToggle.classList.toggle('active');
+
+            // Save theme preference
+            const theme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+    </script>
 
 </body>
 
