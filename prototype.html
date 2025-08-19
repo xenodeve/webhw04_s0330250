@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW4 | Xeno Robot Shop</title>
+    <!-- Tailwind CSS CDN -->
+    <link rel="icon"
+        href="https://media.discordapp.net/attachments/1401190559305170985/1401192342278373377/favicon.png?ex=688f618f&is=688e100f&hm=bb521dd83dcf937de6448ac509bee1c8af382f1371b754d8169ffaafa24d4a88&=&format=webp&quality=lossless" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- IBM Plex Sans Thai Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .company-logo {
+            font-family: 'IBM Plex Sans Thai', 'Poppins', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: absolute; /* animation fix*/
+            margin-left: 13px;
+            font-size: 2.2em;
+            text-decoration: none; /*ลบเส้นใต้จากค่า default ของ Browser */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            left: 0;
+            top: 0;
+        }
+
+        .logo-container {
+            transition: transform 0.4s ease;
+            transition-delay: 0.08s;
+            height: 48px;
+            width: max-content;
+            position: relative;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.06);
+        }
+
+        .company-logo:nth-child(1) {
+            color: rgb(231, 231, 231);
+        }
+
+        .company-logo:nth-child(2) {
+            color: #d3aa5e;
+            /* color: #c9ab74 */
+            animation: animate 7s ease-in-out infinite;
+        }
+
+        /* @keyframe สำหรับ logo-container a (Xeno) ตัวที่ 2 (ตัวหลัง)*/
+        @keyframes animate {
+
+            0%,
+            100% {
+                clip-path: polygon(0% 45%,
+                        16% 44%,
+                        33% 50%,
+                        54% 60%,
+                        70% 61%,
+                        84% 59%,
+                        100% 52%,
+                        100% 100%,
+                        0% 100%);
+            }
+
+            50% {
+                clip-path: polygon(0% 60%,
+                        15% 65%,
+                        34% 66%,
+                        51% 62%,
+                        67% 50%,
+                        84% 45%,
+                        100% 46%,
+                        100% 100%,
+                        0% 100%);
+            }
+        }
+
+        /* Dark mode toggle button styles inspired by web.dev */
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .theme-toggle:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sun-and-moon > :is(.moon, .sun, .sun-beams) {
+            transform-origin: center;
+        }
+
+        .sun-and-moon > :is(.moon, .sun) {
+            fill: currentColor;
+        }
+
+        .theme-toggle:is(:hover, :focus-visible) > .sun-and-moon > :is(.moon, .sun) {
+            fill: #C9AB74;
+        }
+
+        .sun-and-moon > .sun-beams {
+            stroke: currentColor;
+            stroke-width: 2px;
+        }
+
+        .theme-toggle:is(:hover, :focus-visible) .sun-and-moon > .sun-beams {
+            stroke: #C9AB74;
+        }
+
+        /* Dark mode styles */
+        [data-theme="dark"] .sun-and-moon > .sun {
+            transform: scale(1.75);
+        }
+
+        [data-theme="dark"] .sun-and-moon > .sun-beams {
+            opacity: 0;
+        }
+
+        [data-theme="dark"] .sun-and-moon > .moon > circle {
+            transform: translateX(-7px);
+        }
+
+        @supports (cx: 1) {
+            [data-theme="dark"] .sun-and-moon > .moon > circle {
+                cx: 17;
+                transform: translateX(0);
+            }
+        }
+
+        /* Animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .sun-and-moon > .sun {
+                transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            .sun-and-moon > .sun-beams {
+                transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                           opacity 0.5s ease;
+            }
+
+            .sun-and-moon .moon > circle {
+                transition: transform 0.25s ease-out;
+            }
+
+            @supports (cx: 1) {
+                .sun-and-moon .moon > circle {
+                    transition: cx 0.25s ease-out;
+                }
+            }
+
+            [data-theme="dark"] .sun-and-moon > .sun {
+                transition-timing-function: ease;
+                transition-duration: 0.25s;
+                transform: scale(1.75);
+            }
+
+            [data-theme="dark"] .sun-and-moon > .sun-beams {
+                transition-duration: 0.15s;
+                transform: rotateZ(-25deg);
+            }
+
+            [data-theme="dark"] .sun-and-moon > .moon > circle {
+                transition-duration: 0.5s;
+                transition-delay: 0.25s;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['IBM Plex Sans Thai', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#D8CFC4',   // เบจอ่อน (พื้นหลังหลัก)
+                        secondary: '#7C6F64', // น้ำตาลเทา (หัว/Footer)
+                        tertiary: '#C9AB74',  // สีน้ำตาลสว่าง
+                        accent: '#A58D5D',    // น้ำตาลทอง (ไฮไลต์/ปุ่ม)
+                        card: '#E8E3DC',      // สีพื้นการ์ด
+                        cardLight: '#F3EEE8', // สีพื้นการ์ดรอง
+                        border: '#B8A99A',    // สีน้ำตาลอ่อนสำหรับขอบ
+                        // Dark mode colors
+                        darkPrimary: '#1a1a1a',
+                        darkSecondary: '#2d2d2d', 
+                        darkTertiary: '#404040',
+                        darkAccent: '#C9AB74',
+                        darkCard: '#333333',
+                        darkCardLight: '#404040',
+                        darkBorder: '#555555',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-primary dark:bg-darkPrimary font-sans antialiased transition-all duration-300">
+
+    <!-- 1) Header Part -->
+    <header class="bg-secondary dark:bg-darkSecondary text-white/85 shadow-md transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Company Logo -->
+            <div class="logo-container relative h-12">
+                <a href="#" class="company-logo">Xeno</a>
+                <a href="#" class="company-logo">Xeno</a>
+            </div>
+            <!-- 5 Options Menu + Dark Mode Toggle (Right Part) -->
+            <div class="flex items-center space-x-6">
+                <nav>
+                    <ul class="flex space-x-7 text-base font-medium">
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                หน้าแรก
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                สินค้า
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                เกี่ยวกับเรา
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                บริการ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="relative hover:text-white hover:scale-105 px-1 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                                ติดต่อ
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- Dark Mode Toggle Button -->
+                <button class="theme-toggle" id="theme-toggle" title="เปลี่ยนโหมดสว่าง/มืด" aria-label="light" aria-live="polite">
+                    <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+                        <mask class="moon" id="moon-mask">
+                            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                            <circle cx="24" cy="10" r="6" fill="black" />
+                        </mask>
+                        <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+                        <g class="sun-beams" stroke="currentColor">
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2) Main Content Part -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex">
+
+        <!-- Aside Part (with 5 Options Menu) -->
+        <aside
+            class="group w-1/5 bg-card dark:bg-darkCard shadow-lg rounded-xl p-4 mr-4 border border-border dark:border-darkBorder hover:shadow-black/30 dark:hover:shadow-white/10 transition duration-300 ease-in-out">
+            <h3
+                class="text-lg font-bold mb-4 text-accent dark:text-darkAccent border-l-4 border-accent dark:border-darkAccent pl-3 group-hover:border-tertiary dark:group-hover:border-darkAccent group-hover:text-tertiary dark:group-hover:text-darkAccent transition-all duration-300">
+                หมวดหมู่</h3>
+            <ul class="space-y-2 text-base text-black/80 dark:text-white/80">
+                <li><a href="#"
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                        - หุ่นยนต์ภายในบ้าน
+                    </a>
+                </li>
+                <li><a href="#"
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                        - หุ่นยนต์อุตสาหกรรม
+                    </a>
+                </li>
+                <li><a href="#"
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                        - หุ่นยนต์การแพทย์
+                    </a>
+                </li>
+                <li><a href="#"
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                        - หุ่นยนต์เพื่อการศึกษา
+                    </a>
+                </li>
+                <li><a href="#"
+                        class="hover:text-secondary dark:hover:text-darkAccent transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">
+                        - อุปกรณ์เสริม
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area (with 4 Cards with Robot Details) -->
+        <section class="w-4/5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            <!-- Robot Card 1 -->
+            <div
+                class="group bg-cardLight dark:bg-darkCardLight rounded-xl shadow-lg overflow-hidden border border-border dark:border-darkBorder hover:shadow-black/20 dark:hover:shadow-white/10 hover:scale-105 transition duration-300 ease-in-out">
+                <img src="https://media.discordapp.net/attachments/1401190559305170985/1401190567576338472/1.png?ex=688f5fe8&is=688e0e68&hm=0316c82116ebb40880d6b029e69949c806e35c0ca17214856be99efa0813a6b1&=&format=webp&quality=lossless&width=1061&height=597"
+                    alt="RoboBuddy"
+                    class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
+                <div class="p-5">
+                    <h4 class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
+                    after:transition-all after:duration-500 after:ease-in-out
+                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
+                        RoboBuddy 1000</h4>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">หุ่นยนต์อเนกประสงค์พร้อม AI สำหรับใช้งานทั่วไปในบ้าน</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-accent dark:text-darkAccent font-bold text-xl">฿1,500</span>
+                        <button
+                            class="bg-accent dark:bg-darkAccent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-all duration-300">
+                            รายละเอียด
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Robot Card 2 -->
+            <div
+                class="group bg-cardLight dark:bg-darkCardLight rounded-xl shadow-lg overflow-hidden border border-border dark:border-darkBorder hover:shadow-black/20 dark:hover:shadow-white/10 hover:scale-105 transition duration-300 ease-in-out">
+                <img src="https://media.discordapp.net/attachments/1401190559305170985/1401190568436043817/2.png?ex=688f5fe8&is=688e0e68&hm=02c37efb61a2fc1d86b121ccd441d5f318d97d7fe121b337cfd9cf0ddb027f85&=&format=webp&quality=lossless"
+                    alt="Industrial Arm X"
+                    class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
+                <div class="p-5">
+                    <h4 class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
+                    after:transition-all after:duration-500 after:ease-in-out
+                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
+                        Industrial Arm X</h4>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">แขนกลความแม่นยำสูงสำหรับการผลิตและประกอบ</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-accent dark:text-darkAccent font-bold text-xl">฿15,000</span>
+                        <button
+                            class="bg-accent dark:bg-darkAccent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-all duration-300">
+                            รายละเอียด
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Robot Card 3 -->
+            <div
+                class="group bg-cardLight dark:bg-darkCardLight rounded-xl shadow-lg overflow-hidden border border-border dark:border-darkBorder hover:shadow-black/20 dark:hover:shadow-white/10 hover:scale-105 transition duration-300 ease-in-out">
+                <img src="https://media.discordapp.net/attachments/1401190559305170985/1401190568108752956/3_fix.png?ex=688f5fe8&is=688e0e68&hm=3bf66e4a1208bcad26b5b1868cf5d3efdc3fe71557064f8fa56da41ab13ccbaa&=&format=webp&quality=lossless&width=597&height=597"
+                    alt="MediBot 500"
+                    class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl">
+                <div class="p-5">
+                    <h4 class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
+                    after:transition-all after:duration-500 after:ease-in-out
+                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
+                        MedicBot 500</h4>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">ช่วยวินิจฉัยและดูแลผู้ป่วย เหมาะสำหรับการใช้งานทางคลินิก</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-accent dark:text-darkAccent font-bold text-xl">฿8,000</span>
+                        <button
+                            class="bg-accent dark:bg-darkAccent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-all duration-300">
+                            รายละเอียด
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Robot Card 4 -->
+            <div
+                class="group bg-cardLight dark:bg-darkCardLight rounded-xl shadow-lg overflow-hidden border border-border dark:border-darkBorder hover:shadow-black/20 dark:hover:shadow-white/10 hover:scale-105 transition duration-300 ease-in-out">
+                <img src="https://media.discordapp.net/attachments/1401190559305170985/1401190569513975858/4.webp?ex=688f5fe8&is=688e0e68&hm=8046ec01c82df282f6f8deda01ee0e7d137e236b739a2d86be9190f1565aeb6f&=&format=webp&width=597&height=597"
+                    alt="EduBot Pro"
+                    class="w-full h-48 object-contain object-top bg-cardLight dark:bg-darkCardLight shadow-lg rounded-lg transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-xl ">
+                <div class="p-5">
+                    <h4 class="text-2xl font-semibold text-accent dark:text-darkAccent relative
+                    after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-secondary dark:after:bg-darkAccent after:opacity-0
+                    after:transition-all after:duration-500 after:ease-in-out
+                    group-hover:after:w-full group-hover:after:opacity-100 group-hover:text-tertiary dark:group-hover:text-darkAccent">
+                        EduBot Pro
+                    </h4>
+                    <p class="text-base text-black/70 dark:text-white/70 mt-2">หุ่นยนต์เพื่อการศึกษาแบบ STEM เหมาะสำหรับทุกวัย</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-accent dark:text-darkAccent font-bold text-xl">฿750</span>
+                        <button
+                            class="bg-accent dark:bg-darkAccent text-white font-bold text-lg px-4 py-1.5 my-2 rounded shadow hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-all duration-300">
+                            รายละเอียด
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 3) Footer Part -->
+    <footer class="bg-secondary dark:bg-darkSecondary mt-12 py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400 dark:text-gray-300">
+            <!-- Copyright Message -->
+            <p>
+                <p class="text-white/70 dark:text-white/80">&copy; 2025 บริษัทซีโนจำกัดขอสงวนลิขสิทธิ์</p>
+                <a href="#"
+                    class="text-white/80 dark:text-white/90 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">เงื่อนไขการใช้บริการ</a>
+                <span class="mx-2">|</span>
+                <a href="#"
+                    class="text-white/80 dark:text-white/90 hover:text-white transition-colors duration-300 relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-accent dark:after:bg-darkAccent after:transition-all after:duration-300 hover:after:w-full">นโยบายความเป็นส่วนตัว</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode toggle functionality inspired by web.dev
+        const storageKey = 'theme-preference';
+        
+        const getColorPreference = () => {
+            if (localStorage.getItem(storageKey))
+                return localStorage.getItem(storageKey);
+            else
+                return window.matchMedia('(prefers-color-scheme: dark)').matches
+                    ? 'dark'
+                    : 'light';
+        };
+        
+        const setPreference = () => {
+            localStorage.setItem(storageKey, theme.value);
+            reflectPreference();
+        };
+        
+        const reflectPreference = () => {
+            document.firstElementChild.setAttribute('data-theme', theme.value);
+            document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
+            
+            // Apply Tailwind dark mode class
+            if (theme.value === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        };
+        
+        const theme = {
+            value: getColorPreference(),
+        };
+        
+        const onClick = () => {
+            // flip current value
+            theme.value = theme.value === 'light' ? 'dark' : 'light';
+            setPreference();
+        };
+        
+        // set early so no page flashes / CSS is made aware
+        reflectPreference();
+        
+        window.onload = () => {
+            // set on load so screen readers can see latest value on the button
+            reflectPreference();
+            
+            // now this script can find and listen for clicks on the control
+            document.querySelector('#theme-toggle').addEventListener('click', onClick);
+        };
+        
+        // sync theme กับ system
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({matches: isDark}) => {
+            theme.value = isDark ? 'dark' : 'light';
+            setPreference();
+        });
+    </script>
+
+</body>
+
+</html>

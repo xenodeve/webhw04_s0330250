@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HW4 - Robot Sales</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+  <!-- Header -->
+  <header class="bg-green-600 text-white p-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <img src="https://via.placeholder.com/100x40?text=Company+Logo" alt="Company Logo" class="h-10" />
+      <nav>
+        <ul class="flex space-x-4">
+          <li><a href="#" class="hover:underline">Home</a></li>
+          <li><a href="#" class="hover:underline">Products</a></li>
+          <li><a href="#" class="hover:underline">About Us</a></li>
+          <li><a href="#" class="hover:underline">Services</a></li>
+          <li><a href="#" class="hover:underline">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-6 flex flex-col md:flex-row gap-6">
+    <!-- Sidebar (Categories) -->
+    <aside class="md:w-1/4 bg-white rounded-lg shadow p-4">
+      <h3 class="text-xl font-bold mb-4">Categories</h3>
+      <nav>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-green-600">Robots for Home</a></li>
+          <li><a href="#" class="hover:text-green-600">Industrial Robots</a></li>
+          <li><a href="#" class="hover:text-green-600">Medical Robots</a></li>
+          <li><a href="#" class="hover:text-green-600">Educational Robots</a></li>
+          <li><a href="#" class="hover:text-green-600">Accessories</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Product Cards Section -->
+    <section class="md:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <h4 class="text-lg font-semibold mb-2">RoboBuddy 1000</h4>
+        <p class="text-sm mb-4">A versatile companion robot for everyday tasks. Features advanced AI and navigation.</p>
+        <div class="flex items-center justify-between">
+          <span class="text-green-600 font-bold text-lg">$1,500</span>
+          <button class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">View Details</button>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <h4 class="text-lg font-semibold mb-2">Industrial Arm X</h4>
+        <p class="text-sm mb-4">High-precision robotic arm designed for manufacturing and assembly lines.</p>
+        <div class="flex items-center justify-between">
+          <span class="text-green-600 font-bold text-lg">$15,000</span>
+          <button class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">View Details</button>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <h4 class="text-lg font-semibold mb-2">MediBot 500</h4>
+        <p class="text-sm mb-4">Assists medical professionals with diagnostics and patient care. Certified for clinical use.</p>
+        <div class="flex items-center justify-between">
+          <span class="text-green-600 font-bold text-lg">$8,000</span>
+          <button class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">View Details</button>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <h4 class="text-lg font-semibold mb-2">EduBot Pro</h4>
+        <p class="text-sm mb-4">An interactive robot for STEM education, suitable for all ages. Programmable and expandable.</p>
+        <div class="flex items-center justify-between">
+          <span class="text-green-600 font-bold text-lg">$750</span>
+          <button class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">View Details</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-100 text-center text-sm py-4 text-gray-700">
+    <p>&copy; 2025 Your Company Name. All rights reserved.</p>
+    <p>
+      <a href="#" class="text-blue-600 hover:underline">Terms and Conditions</a> |
+      <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a>
+    </p>
+  </footer>
+</body>
+</html>
